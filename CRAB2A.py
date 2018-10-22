@@ -1,6 +1,7 @@
 #Ben Cradick
 #cs3130
 #10-19-18
+from random import randint
 def selection_sort(arr):
     for i in range(len(arr)): 
         # Find the minimum element in remaining  
@@ -152,3 +153,32 @@ def merge(arr, l, m, r):
         arr[k] = R[j] 
         j += 1
         k += 1
+def generate_sorted_arr(size):
+    #arr is uninitialized list
+    arr = []
+    for x in range(0,size):
+        arr[x] = x + 1
+    return arr
+
+#abstracting away from the bult in reverse function 
+def reverse_arr(arr):
+    return arr.reverse()
+
+def generate_random_arr(size):
+    arr = []
+    for x in range(0,size):
+        arr[x] = randint(1, 10000)
+    return arr
+
+#every 10th element of array will be random.
+def generate_semi_sorted_arr(size):
+    source_arr = generate_sorted_arr(size)
+    arr = source_arr
+    length = len(source_arr)
+    for x in range(0,size):
+        if x%10 == 0:
+            rand_element = randint(0,length)
+            arr[x] = source_arr[rand_element]
+            source_arr.pop(rand_element)
+            length = length - 1
+    return arr

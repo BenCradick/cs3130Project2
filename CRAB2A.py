@@ -2,6 +2,13 @@
 #cs3130
 #10-19-18
 from random import randint
+import math
+import functools
+import resource
+import sys
+sys.setrecursionlimit(2000)
+print(resource.RLIMIT_STACK, resource.RLIM_INFINITY, resource.RLIM_INFINITY)
+#resource.setrlimit(resource.RLIMIT_STACK, (resource.RLIM_INFINITY, resource.RLIM_INFINITY))
 def selection_sort(arr):
     for i in range(len(arr)): 
         # Find the minimum element in remaining  
@@ -13,7 +20,8 @@ def selection_sort(arr):
                 
         # Swap the found minimum element with  
         # the first element         
-        arr[i], arr[min_idx] = arr[min_idx], arr[i] 
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+
 
 def insertion_sort(arr):
     
@@ -31,6 +39,7 @@ def insertion_sort(arr):
                 arr[j+1] = arr[j] 
                 j -= 1
         arr[j+1] = key 
+
 
 def bubble_sort_counting(arr):
     n = len(arr) 
@@ -55,6 +64,7 @@ def bubble_sort_counting(arr):
         # by inner loop, then break 
         if swapped == False: 
             break
+    
 
 
 def bubble_sort_no_counting(arr):
@@ -71,6 +81,7 @@ def bubble_sort_no_counting(arr):
             # than the next element 
             if arr[j] > arr[j+1] : 
                 arr[j], arr[j+1] = arr[j+1], arr[j] 
+    
 
 def quick_sort(arr, low, high):
     if low < high: 
@@ -82,14 +93,14 @@ def quick_sort(arr, low, high):
         # Separately sort elements before 
         # partition and after partition 
         quick_sort(arr, pi+1, high) 
-        quick_sort(arr, low, pi-1) 
+        quick_sort(arr, low, pi-1)
 
 def merge_sort(arr, l, r):
     if l < r: 
   
         # Same as (l+r)/2, but avoids overflow for 
         # large l and h 
-        m = (l+(r-1))/2
+        m = math.floor((l+(r-1))/2)
   
         # Sort first and second halves 
         merge_sort(arr, l, m) 
@@ -154,31 +165,149 @@ def merge(arr, l, m, r):
         j += 1
         k += 1
 def generate_sorted_arr(size):
+    
+    #max value for integer in array
+    UPPER = 10000
+    #initialize lower so that we can initialize arrray with first value so index in range for loops.
+    lower = randint(1,51)
     #arr is uninitialized list
-    arr = []
-    for x in range(0,size):
-        arr[x] = x + 1
+    arr = [lower]
+    #initialize x to 0 for array initialization.
+    while lower + 50 <= UPPER and len(arr) <= size:
+        #generate random value to be the lower bound for random generated number within +50 range of last lower.
+        lower = randint(lower, lower+50)
+        #append next value to list
+        arr.append(lower)
+    while len(arr) <= size:
+        try:
+            #select random initialized element that is not the last one
+            element = randint(1, len(arr) - 1)
+
+            #generate integer value that is >arr[element - 1] and <arr[element]
+            inserted_val = randint(arr[element - 1], arr[element])
+
+            #insert inserted_val into the list at element, list shifts right
+            arr.insert(element, inserted_val)
+        #used to debug the issue but only seeing the problem cases
+        except IndexError:
+            print("IndexError: line 179 ",element, inserted_val, len(arr))
     return arr
 
-#abstracting away from the bult in reverse function 
-def reverse_arr(arr):
-    return arr.reverse()
 
 def generate_random_arr(size):
-    arr = []
-    for x in range(0,size):
-        arr[x] = randint(1, 10000)
+    arr = [randint(0,10000) for x in range(0,size)]
     return arr
 
 #every 10th element of array will be random.
 def generate_semi_sorted_arr(size):
+    #generate sorted array which will become semi sorted
     source_arr = generate_sorted_arr(size)
-    arr = source_arr
+    arr = source_arr.copy()
     length = len(source_arr)
     for x in range(0,size):
         if x%10 == 0:
-            rand_element = randint(0,length)
+            rand_element = randint(0,length-1)
             arr[x] = source_arr[rand_element]
             source_arr.pop(rand_element)
             length = length - 1
     return arr
+#tests that array is sorted
+def test_list_ordered(arr):
+    for x in range(1,len(arr) - 1):
+        if(arr[x - 1] > arr[x]):
+            return False
+        
+    return True
+#function for testing to make sure arrays get sorted properly
+def test_each_method():
+    size = [100,1000,10000]
+    for x in range(0,3):
+        arr1 = generate_sorted_arr(size[x])
+        arr2 = generate_random_arr(size[x])
+        arr3 = generate_semi_sorted_arr(size[x])
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        insertion_sort(copy1)
+        insertion_sort(copy2)
+        insertion_sort(copy3)
+
+        print("Insertion Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
+        print("Insertion Sort", "random array", "sorted: ", test_list_ordered(copy2))
+        print("Insertion Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        selection_sort(copy1)
+        selection_sort(copy2)
+        selection_sort(copy3)
+
+        print("Selection Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
+        print("Selection Sort", "random array", "sorted: ", test_list_ordered(copy2))
+        print("Selection Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        bubble_sort_counting(copy1)
+        bubble_sort_counting(copy2)
+        bubble_sort_counting(copy3)
+
+        print("Bubble Sort w/ counting", "sorted array", "sorted: ", test_list_ordered(copy1))
+        print("Bubble Sort w/ counting", "random array", "sorted: ", test_list_ordered(copy2))
+        print("Bubble Sort w/ counting", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        bubble_sort_no_counting(copy1)
+        bubble_sort_no_counting(copy2)
+        bubble_sort_no_counting(copy3)
+
+        print("Bubble Sort w/o counting", "sorted array", "sorted: ", test_list_ordered(copy1))
+        print("Bubble Sort w/o counting", "random array", "sorted: ", test_list_ordered(copy2))
+        print("Bubble Sort w/o counting", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        merge_sort(copy1, 0, size[x] - 1)
+        merge_sort(copy2, 0, size[x] - 1)
+        merge_sort(copy3, 0, size[x] - 1)
+
+        print("Merge Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
+        print("Merge Sort", "random array", "sorted: ", test_list_ordered(copy2))
+        print("Merge Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        quick_sort(copy1, 0, size[x] - 1)
+        quick_sort(copy2, 0, size[x] - 1)
+        quick_sort(copy3, 0, size[x] - 1)
+
+        print("Quick Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
+        print("Quick Sort", "random array", "sorted: ", test_list_ordered(copy2))
+        print("Quick Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+
+
+        print("\n")
+test_each_method()
+
+
+
+
+# arr2 = generate_random_arr(100)
+
+# print(arr2)
+# selection_sort(arr2)
+# print(arr2)
+

@@ -3,12 +3,13 @@
 #10-19-18
 from random import randint
 import math
-import functools
-import resource
+
 import sys
-sys.setrecursionlimit(2000)
-print(resource.RLIMIT_STACK, resource.RLIM_INFINITY, resource.RLIM_INFINITY)
-#resource.setrlimit(resource.RLIMIT_STACK, (resource.RLIM_INFINITY, resource.RLIM_INFINITY))
+import time
+#super danger don't do this if you can't afford to crash
+sys.setrecursionlimit(20000)
+sys.stdout =  open("CRAB2A.py", "a")
+
 def selection_sort(arr):
     for i in range(len(arr)): 
         # Find the minimum element in remaining  
@@ -220,8 +221,19 @@ def test_list_ordered(arr):
     return True
 #function for testing to make sure arrays get sorted properly
 def test_each_method():
+    sorted_array = "sorted array"
+    random_array = "random array"
+    semi_sorted= "semi-sorted array"
+
+    insert = "Insertion Sort"
+    select = "Selection Sort"
+    bubswith = "Bubble Sort w/ counting"
+    bubswithout = "Bubble Sort w/o counting"
+    merge = "Merge Sort"
+    quick = "Quick Sort"
     size = [100,1000,10000]
     for x in range(0,3):
+        
         arr1 = generate_sorted_arr(size[x])
         arr2 = generate_random_arr(size[x])
         arr3 = generate_semi_sorted_arr(size[x])
@@ -234,9 +246,9 @@ def test_each_method():
         insertion_sort(copy2)
         insertion_sort(copy3)
 
-        print("Insertion Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
-        print("Insertion Sort", "random array", "sorted: ", test_list_ordered(copy2))
-        print("Insertion Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+        print(f'{insert:25}', f'{sorted_array:20}', "sorted: ", test_list_ordered(copy1))
+        print(f'{insert:25}', f'{random_array:20}', "sorted: ", test_list_ordered(copy2))
+        print(f'{insert:25}', f'{semi_sorted:20}', "sorted: ", test_list_ordered(copy3))
 
         copy1 = arr1.copy()
         copy2 = arr2.copy()
@@ -246,9 +258,9 @@ def test_each_method():
         selection_sort(copy2)
         selection_sort(copy3)
 
-        print("Selection Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
-        print("Selection Sort", "random array", "sorted: ", test_list_ordered(copy2))
-        print("Selection Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+        print(f'{select:25}', f'{sorted_array:20}', "sorted: ", test_list_ordered(copy1))
+        print(f'{select:25}', f'{random_array:20}', "sorted: ", test_list_ordered(copy2))
+        print(f'{select:25}', f'{semi_sorted:20}', "sorted: ", test_list_ordered(copy3))
 
         copy1 = arr1.copy()
         copy2 = arr2.copy()
@@ -258,9 +270,9 @@ def test_each_method():
         bubble_sort_counting(copy2)
         bubble_sort_counting(copy3)
 
-        print("Bubble Sort w/ counting", "sorted array", "sorted: ", test_list_ordered(copy1))
-        print("Bubble Sort w/ counting", "random array", "sorted: ", test_list_ordered(copy2))
-        print("Bubble Sort w/ counting", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+        print(f'{bubswith:25}', f'{sorted_array:20}', "sorted: ", test_list_ordered(copy1))
+        print(f'{bubswith:25}', f'{random_array:20}', "sorted: ", test_list_ordered(copy2))
+        print(f'{bubswith:25}', f'{semi_sorted:20}', "sorted: ", test_list_ordered(copy3))
 
         copy1 = arr1.copy()
         copy2 = arr2.copy()
@@ -270,9 +282,9 @@ def test_each_method():
         bubble_sort_no_counting(copy2)
         bubble_sort_no_counting(copy3)
 
-        print("Bubble Sort w/o counting", "sorted array", "sorted: ", test_list_ordered(copy1))
-        print("Bubble Sort w/o counting", "random array", "sorted: ", test_list_ordered(copy2))
-        print("Bubble Sort w/o counting", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+        print(f'{bubswithout:25}', f'{sorted_array:20}', "sorted: ", test_list_ordered(copy1))
+        print(f'{bubswithout:25}', f'{random_array:20}', "sorted: ", test_list_ordered(copy2))
+        print(f'{bubswithout:25}', f'{semi_sorted:20}', "sorted: ", test_list_ordered(copy3))
 
         copy1 = arr1.copy()
         copy2 = arr2.copy()
@@ -282,9 +294,9 @@ def test_each_method():
         merge_sort(copy2, 0, size[x] - 1)
         merge_sort(copy3, 0, size[x] - 1)
 
-        print("Merge Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
-        print("Merge Sort", "random array", "sorted: ", test_list_ordered(copy2))
-        print("Merge Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+        print(f'{merge:25}', f'{sorted_array:20}', "sorted: ", test_list_ordered(copy1))
+        print(f'{merge:25}', f'{random_array:20}', "sorted: ", test_list_ordered(copy2))
+        print(f'{merge:25}', f'{semi_sorted:20}', "sorted: ", test_list_ordered(copy3))
 
         copy1 = arr1.copy()
         copy2 = arr2.copy()
@@ -294,13 +306,162 @@ def test_each_method():
         quick_sort(copy2, 0, size[x] - 1)
         quick_sort(copy3, 0, size[x] - 1)
 
-        print("Quick Sort", "sorted array", "sorted: ", test_list_ordered(copy1))
-        print("Quick Sort", "random array", "sorted: ", test_list_ordered(copy2))
-        print("Quick Sort", "semi-sorted array", "sorted: ", test_list_ordered(copy3))
+        print(f'{quick:25}', f'{sorted_array:20}', "sorted: ", test_list_ordered(copy1))
+        print(f'{quick:25}', f'{random_array:20}', "sorted: ", test_list_ordered(copy2))
+        print(f'{quick:25}', f'{semi_sorted:20}', "sorted: ", test_list_ordered(copy3))
 
 
         print("\n")
-test_each_method()
+
+def time_each_method():
+    sorted_array = "sorted array"
+    random_array = "random array"
+    semi_sorted= "semi-sorted array"
+
+    insert = "Insertion Sort"
+    select = "Selection Sort"
+    bubswith = "Bubble Sort w/ counting"
+    bubswithout = "Bubble Sort w/o counting"
+    merge = "Merge Sort"
+    quick = "Quick Sort"
+    size = [100,1000,10000]
+    for x in range(0,3):
+        
+        arr1 = generate_sorted_arr(size[x])
+        arr2 = generate_random_arr(size[x])
+        arr3 = generate_semi_sorted_arr(size[x])
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        z = time.process_time()
+        insertion_sort(copy1)
+        y = time.process_time()
+        time1 = y - z
+        
+        z = time.process_time()
+        insertion_sort(copy2)
+        y = time.process_time()
+        time2 = y - z
+
+        z = time.process_time()
+        insertion_sort(copy3)
+        y = time.process_time()
+        time3 = y - z
+
+        print(f'{insert:25}', f'{sorted_array:20}', "runtime:", time1)
+        print(f'{insert:25}', f'{random_array:20}', "runtime:", time2)
+        print(f'{insert:25}', f'{semi_sorted:20}', "runtime:", time3)
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        z = time.process_time()
+        selection_sort(copy1)
+        y = time.process_time()
+        time1 = y - z
+        z = time.process_time()
+        selection_sort(copy2)
+        y = time.process_time()
+        time2 = y - z
+        z = time.process_time()
+        selection_sort(copy3)
+        y = time.process_time()
+        time3 = y - z
+
+        print(f'{select:25}', f'{sorted_array:20}', "runtime:", time1)
+        print(f'{select:25}', f'{random_array:20}', "runtime:", time2)
+        print(f'{select:25}', f'{semi_sorted:20}', "runtime:", time3)
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        z = time.process_time()
+        bubble_sort_counting(copy1)
+        y = time.process_time()
+        time1 = y - z
+        z = time.process_time()
+        bubble_sort_counting(copy2)
+        y = time.process_time()
+        time2 = y - z
+        z = time.process_time()
+        bubble_sort_counting(copy3)
+        y = time.process_time()
+        time3 = y - z
+
+        print(f'{bubswith:25}', f'{sorted_array:20}', "runtime:", time1)
+        print(f'{bubswith:25}', f'{random_array:20}', "runtime:", time2)
+        print(f'{bubswith:25}', f'{semi_sorted:20}', "runtime:", time3)
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        z = time.process_time()
+        bubble_sort_no_counting(copy1)
+        y = time.process_time()
+        time1 = y - z
+        z = time.process_time()
+        bubble_sort_no_counting(copy2)
+        y = time.process_time()
+        time2 = y - z
+        z = time.process_time()
+        bubble_sort_no_counting(copy3)
+        y = time.process_time()
+        time3 = y - z
+
+        print(f'{bubswithout:25}', f'{sorted_array:20}', "runtime:", time1)
+        print(f'{bubswithout:25}', f'{random_array:20}', "runtime:", time2)
+        print(f'{bubswithout:25}', f'{semi_sorted:20}', "runtime:", time3)
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        z = time.process_time()
+        merge_sort(copy1, 0, size[x] - 1)
+        y = time.process_time()
+        time1 = y - z
+        z = time.process_time()
+        merge_sort(copy2, 0, size[x] - 1)
+        y = time.process_time()
+        time2 = y - z
+        z = time.process_time()
+        merge_sort(copy3, 0, size[x] - 1)
+        y = time.process_time()
+        time3 = y - z
+
+        print(f'{merge:25}', f'{sorted_array:20}', "runtime:", time1)
+        print(f'{merge:25}', f'{random_array:20}', "runtime:", time2)
+        print(f'{merge:25}', f'{semi_sorted:20}', "runtime:", time3)
+
+        copy1 = arr1.copy()
+        copy2 = arr2.copy()
+        copy3 = arr3.copy()
+
+        z = time.process_time()
+        quick_sort(copy1, 0, size[x] - 1)
+        y = time.process_time()
+        time1 = y - z
+        z = time.process_time()
+        quick_sort(copy2, 0, size[x] - 1)
+        y = time.process_time()
+        time2 = y - z
+        z = time.process_time()
+        quick_sort(copy3, 0, size[x] - 1)
+        y = time.process_time()
+        time3 = y - z
+
+        print(f'{quick:25}', f'{sorted_array:20}', "runtime:", time1)
+        print(f'{quick:25}', f'{random_array:20}', "runtime:", time2)
+        print(f'{quick:25}', f'{semi_sorted:20}', "runtime:", time3)
+
+
+        print("\n")
+time_each_method()
 
 
 

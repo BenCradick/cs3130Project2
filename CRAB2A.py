@@ -464,11 +464,65 @@ def time_each_method():
 time_each_method()
 
 
+###############################    RESULTS ##################################
+
+# Insertion Sort            sorted array         runtime: 4.799999999999943e-05
+# Insertion Sort            random array         runtime: 0.0006280000000000036
+# Insertion Sort            semi-sorted array    runtime: 9.10000000000008e-05
+# Selection Sort            sorted array         runtime: 0.000571000000000009
+# Selection Sort            random array         runtime: 0.0004880000000000023
+# Selection Sort            semi-sorted array    runtime: 0.0004880000000000023
+# Bubble Sort w/ counting   sorted array         runtime: 1.5000000000001124e-05
+# Bubble Sort w/ counting   random array         runtime: 0.0010550000000000004
+# Bubble Sort w/ counting   semi-sorted array    runtime: 0.000565000000000003
+# Bubble Sort w/o counting  sorted array         runtime: 0.0006060000000000024
+# Bubble Sort w/o counting  random array         runtime: 0.0011099999999999999
+# Bubble Sort w/o counting  semi-sorted array    runtime: 0.0006910000000000041
+# Merge Sort                sorted array         runtime: 0.0005089999999999956
+# Merge Sort                random array         runtime: 0.0004959999999999964
+# Merge Sort                semi-sorted array    runtime: 0.0004720000000000002
+# Quick Sort                sorted array         runtime: 0.0012749999999999984
+# Quick Sort                random array         runtime: 0.00017500000000000154
+# Quick Sort                semi-sorted array    runtime: 0.0004359999999999989
 
 
-# arr2 = generate_random_arr(100)
+# Insertion Sort            sorted array         runtime: 0.00021699999999999497
+# Insertion Sort            random array         runtime: 0.03690499999999999
+# Insertion Sort            semi-sorted array    runtime: 0.004791000000000004
+# Selection Sort            sorted array         runtime: 0.03475199999999999
+# Selection Sort            random array         runtime: 0.03487599999999999
+# Selection Sort            semi-sorted array    runtime: 0.035775
+# Bubble Sort w/ counting   sorted array         runtime: 0.00010199999999999099
+# Bubble Sort w/ counting   random array         runtime: 0.08459699999999998
+# Bubble Sort w/ counting   semi-sorted array    runtime: 0.049941999999999986
+# Bubble Sort w/o counting  sorted array         runtime: 0.046043
+# Bubble Sort w/o counting  random array         runtime: 0.08441199999999999
+# Bubble Sort w/o counting  semi-sorted array    runtime: 0.050882999999999956
+# Merge Sort                sorted array         runtime: 0.004333999999999949
+# Merge Sort                random array         runtime: 0.004561000000000037
+# Merge Sort                semi-sorted array    runtime: 0.004454999999999876
+# Quick Sort                sorted array         runtime: 0.08120299999999991
+# Quick Sort                random array         runtime: 0.001755000000000062
+# Quick Sort                semi-sorted array    runtime: 0.003974999999999951
 
-# print(arr2)
-# selection_sort(arr2)
-# print(arr2)
+
+# Insertion Sort            sorted array         runtime: 0.0019519999999999538
+# Insertion Sort            random array         runtime: 3.9987619999999997
+# Insertion Sort            semi-sorted array    runtime: 0.5149790000000003
+# Selection Sort            sorted array         runtime: 3.578149
+# Selection Sort            random array         runtime: 3.8416379999999997
+# Selection Sort            semi-sorted array    runtime: 3.6905420000000007
+# Bubble Sort w/ counting   sorted array         runtime: 0.001017999999998409
+# Bubble Sort w/ counting   random array         runtime: 9.331889
+# Bubble Sort w/ counting   semi-sorted array    runtime: 5.599441000000006
+# Bubble Sort w/o counting  sorted array         runtime: 5.089498999999993
+# Bubble Sort w/o counting  random array         runtime: 9.441804999999995
+# Bubble Sort w/o counting  semi-sorted array    runtime: 5.644542999999999
+# Merge Sort                sorted array         runtime: 0.053727999999999554
+# Merge Sort                random array         runtime: 0.05909600000000381
+# Merge Sort                semi-sorted array    runtime: 0.057098000000003424
+# Quick Sort                sorted array         runtime: 8.583891000000001
+# Quick Sort                random array         runtime: 0.024383000000000266
+# Quick Sort                semi-sorted array    runtime: 0.07181600000000543
+
 
